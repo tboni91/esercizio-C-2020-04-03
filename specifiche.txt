@@ -20,6 +20,8 @@ void print_contact(contact_type * person);
 
 .....
 
+// utilizzare questa implementazione di main:
+
 int main(int argc, char *argv[]) {
 
 	contact_type * pino = create_contact("pino rossi", "+393331234567");
