@@ -5,7 +5,7 @@
 #define PHONE_LEN 20
 
 typedef struct {
-   int id; // id numerico del contatto
+   int id; // id numerico del contatto (valore univoco)
    char name[NAME_LEN + 1]; // nome della persona
    char phone[PHONE_LEN + 1]; // numero di telefono
 } contact_type;
