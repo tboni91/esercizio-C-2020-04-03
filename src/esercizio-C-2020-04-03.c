@@ -4,11 +4,14 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <ctype.h>
+#include <errno.h>
 
 #define NAME_LEN 64
 #define PHONE_LEN 20
 
 int id_counter = 0;
+
 /*
 è dato il tipo dati contact_type, dovrebbe servire ad implementare una rubrica telefonica molto semplice:
 
@@ -64,15 +67,43 @@ person: id=1, name='gino verdi', phone='+393487654321'
 
 */
 
-typedef struct {
-   int id; 						// id numerico del contatto (valore univoco)
-   char name[NAME_LEN + 1]; 	// nome della persona
-   char phone[PHONE_LEN + 1]; 	// numero di telefono
-} contact_type;
+typedef
+		struct {
+			int id; 						// id numerico del contatto (valore univoco)
+			char name[NAME_LEN + 1]; 		// nome della persona
+			char phone[PHONE_LEN + 1]; 		// numero di telefono
+		} contact_type;
 
 
 contact_type * create_contact(char * name, char * phone);
 void print_contact(contact_type * person);
+
+contact_type * create_contact(char * name, char * phone) {
+	contact_type * new_contact;
+
+	unsigned int dim_name = strlen(name);
+	unsigned int dim_phone = strlen(phone);
+
+	if (dim_name > NAME_LEN) {
+		return NULL;
+	} else {
+		strncpy(new_contact->name, name, dim_name);
+	}
+
+	if (dim_phone > PHONE_LEN) {
+		return NULL;
+	} else {
+		strncpy(new_contact->phone, phone, dim_phone);
+	}
+
+	new_contact->id = id_counter++;
+
+	return new_contact;
+}
+// person: id=0, name='pino rossi', phone='+393331234567'
+void print_contact(contact_type * person) {
+	printf("\t person: id=%d, name='%s', phone='%s'", person->id, person->name, person->phone);
+}
 
 
 int main(int argc, char *argv[]) {
@@ -97,44 +128,5 @@ int main(int argc, char *argv[]) {
 
 	return 0;
 }
-
-contact_type * create_contact(char * name, char * phone) {
-	contact_type * new_contact;
-
-	int dim_name = (int) sizeof(name) / sizeof(char);
-	int dim_phone = (int) sizeof(phone) / sizeof(char);
-
-	if (dim_name > NAME_LEN) {
-		return NULL;
-	} else {
-		for (int i = 0; i < dim_name; i++)
-			new_contact->name[i] = name[i];
-	}
-
-
-
-	if (dim_phone > PHONE_LEN) {
-		return NULL;
-	} else {
-		for (int i = 0; i < dim_phone; i++)
-			new_contact->phone[i] = phone[i];
-		for (int i = 0; i < dim_phone; i++)
-			printf("%c",new_contact->phone[i]);
-	}
-
-	new_contact->id = id_counter++;
-
-	return new_contact;
-}
-// person: id=0, name='pino rossi', phone='+393331234567'
-void print_contact(contact_type * person) {
-	int dim_name = (int) sizeof(person->name) / sizeof(char);
-	int dim_phone = (int) sizeof(person->phone) / sizeof(char);
-
-	printf("\t person: id=%d, name='", person->id);
-	for (int i = 0; i < dim_name; i++)
-		printf("%c",person->name[i]);
-}
-
 
 
